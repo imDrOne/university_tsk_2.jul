@@ -1,6 +1,16 @@
 package ru.miit.lab_2.services;
 
+import javax.decorator.Decorator;
+import javax.decorator.Delegate;
+import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
+
+@Decorator
 public class VigenereCipher implements IEncryptorable {
+    @Inject
+    @Delegate
+    IEncryptorable ref;
+
     private static String generateKey(String str, String key) {
         int sourceStrLen = str.length();
 
@@ -17,15 +27,22 @@ public class VigenereCipher implements IEncryptorable {
     }
 
     @Override
-    public String encrypt(String str, String key, int shift) {
-        StringBuilder encryptedText = new StringBuilder();
+    public String encrypt(String str, String key) {
+        System.out.println("Before Affine starts Vigenere cipher");
+
+        StringBuilder tempResult = new StringBuilder();
         String sourceStrCopy = str.toUpperCase();
+        String generatedKey = generateKey(str, key);
+
+        System.out.println("New key: " + generatedKey);
 
         for (int i = 0; i < str.length(); i++) {
-            int encryptionPart = (sourceStrCopy.charAt(i) + key.charAt(i)) % 26 + 'A';
-            encryptedText.append((char) (encryptionPart));
+            int encryptionPart = (sourceStrCopy.charAt(i) + generatedKey.charAt(i)) % 26 + 'A';
+            tempResult.append((char) (encryptionPart));
         }
-        return encryptedText.toString();
+
+
+        return ref.encrypt(tempResult.toString(), generatedKey);
     }
 
     public static String originalText(String encryptedText, String key) {
