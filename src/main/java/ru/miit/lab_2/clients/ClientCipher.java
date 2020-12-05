@@ -12,7 +12,7 @@ public class ClientCipher {
         this.refEncryptorable = refEncryptorable;
     }
 
-    public String encrypt(String str, String key, int shift) {
+    public String encrypt(String str, String key) {
         return refEncryptorable.encrypt(str, key);
     }
 }

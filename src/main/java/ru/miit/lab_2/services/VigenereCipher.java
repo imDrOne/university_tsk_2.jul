@@ -2,7 +2,6 @@ package ru.miit.lab_2.services;
 
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
-import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
 @Decorator
@@ -41,6 +40,8 @@ public class VigenereCipher implements IEncryptorable {
             tempResult.append((char) (encryptionPart));
         }
 
+
+        System.out.println("Vigenere cipher result: " + tempResult);
 
         return ref.encrypt(tempResult.toString(), generatedKey);
     }

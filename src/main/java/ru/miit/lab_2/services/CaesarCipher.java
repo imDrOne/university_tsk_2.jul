@@ -11,7 +11,6 @@ public class CaesarCipher implements IEncryptorable {
     @Delegate
     IEncryptorable ref;
 
-
     @Override
     public String encrypt(String str, String key) {
         System.out.println("Before Affine starts Caesar cipher");
